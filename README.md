@@ -5,10 +5,14 @@ Current Animals Available -
 <li> Dogs
 <li> Cats
 <li> Fish
+<li> Birds
+<li> Pands
+<li> Foxes
 <hr>
 Planned Animals - 
-<li> Birds
-<li> Pandas
-<li> Foxes </h3>
+<li> Koalas
+<li> Raccoons
+<li> Whales
+<li> Kangaroos</h3>
 <hr>
 <center> <h2> I'm going to host as soon as it's finished </h2>

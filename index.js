@@ -59,6 +59,34 @@ app.get('/Fish', async (req, res) => {
    res.render('Fish', {fact: content.fact.replaceAll('\n', "").replaceAll('<li>', "").replaceAll('</li>', "").replaceAll('<em>', "").replaceAll('</em>', "").replaceAll('<ul>', "").replaceAll('</ul>', "").replaceAll('&nbsp;', "").replaceAll('<span>', "").replaceAll('</span>', ""), buffer: img.toString('base64')})
 })
 
+app.get('/Bird', async (req, res) => {
+    let content = await fetch(`https://some-random-api.ml/animal/birb`)
+    content = await content.json()
+    let img = await fetch(content.image)
+    img = await img.buffer()
+    res.render('Bird', {fact: content.fact, buffer:img.toString('base64')})
+})
+
+app.get('/Panda', async (req, res) => {
+    let content = await fetch(`https://some-random-api.ml/animal/panda`)
+    content = await content.json()
+    let img = await fetch(content.image)
+    img = await img.buffer()
+    res.render('Panda', {fact: content.fact, buffer:img.toString('base64')})
+})
+
+app.get('/Fox', async (req, res) => {
+    let content = await fetch(`https://some-random-api.ml/animal/fox`)
+    content = await content.json()
+    let img = await fetch(content.image)
+    img = await img.buffer()
+    res.render('Fpx', {fact: content.fact, buffer:img.toString('base64')})
+})
+
 app.get('/wallpaper.png', async (req, res) => {
     res.sendFile(__dirname+'/walpaper.png')
+})
+
+app.get('/assets/:file', async (req, res) => {
+    res.sendFile(__dirname+`/assets/${req.params.file}`)
 })
