@@ -80,9 +80,24 @@ app.get('/Fox', async (req, res) => {
     content = await content.json()
     let img = await fetch(content.image)
     img = await img.buffer()
-    res.render('Fpx', {fact: content.fact, buffer:img.toString('base64')})
+    res.render('Fox', {fact: content.fact, buffer:img.toString('base64')})
 })
 
+app.get('/Koala', async (req, res) => {
+    let content = await fetch(`https://some-random-api.ml/animal/koala`)
+    content = await content.json()
+    let img = await fetch(content.image)
+    img = await img.buffer()
+    res.render('Koala', {fact: content.fact, buffer:img.toString('base64')})
+})
+
+app.get('/Racoon', async (req, res) => {
+    let content = await fetch(`https://some-random-api.ml/animal/racoon`)
+    content = await content.json()
+    let img = await fetch(content.image)
+    img = await img.buffer()
+    res.render('Racoon', {fact: content.fact, buffer:img.toString('base64')})
+})
 app.get('/wallpaper.png', async (req, res) => {
     res.sendFile(__dirname+'/walpaper.png')
 })
@@ -90,3 +105,4 @@ app.get('/wallpaper.png', async (req, res) => {
 app.get('/assets/:file', async (req, res) => {
     res.sendFile(__dirname+`/assets/${req.params.file}`)
 })
+

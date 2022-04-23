@@ -8,10 +8,10 @@ Current Animals Available -
 <li> Birds
 <li> Pands
 <li> Foxes
-<hr>
-Planned Animals - 
 <li> Koalas
 <li> Raccoons
+<hr>
+Planned Animals - 
 <li> Whales
 <li> Kangaroos</h3>
 <hr>
