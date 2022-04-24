@@ -2,6 +2,7 @@ const express = require('express')
 const fetch = require('node-fetch')
 const app = express()
 const port = process.env.PORT || 5600
+const fs = require('fs')
 
 app.set('view engine', 'ejs')
 app.listen(port, () => {
@@ -98,6 +99,54 @@ app.get('/Racoon', async (req, res) => {
     img = await img.buffer()
     res.render('Racoon', {fact: content.fact, buffer:img.toString('base64')})
 })
+
+app.get('/Whale', async (req, res) => {
+    
+    let content = await fetch(`https://some-random-api.ml/facts/whale`)
+    content = await content.json()
+    
+    console.time('uwu')
+    let img = await fetch(`https://some-random-api.ml/img/whale`)
+    img = await img.json()
+    img = await fetch(img.link)
+    img = await img.buffer()
+    console.timeEnd('uwu')
+    res.render('Whale', {fact: content.fact, buffer:img.toString('base64')})
+})
+
+app.get('/Kangaroo', async (req, res) => {
+    
+    let content = await fetch(`https://some-random-api.ml/facts/kangaroo`)
+    content = await content.json()
+    
+    console.time('uwu')
+    let img = await fetch(`https://some-random-api.ml/img/kangaroo`)
+    img = await img.json()
+    img = await fetch(img.link)
+    img = await img.buffer()
+    console.timeEnd('uwu')
+    res.render('Kangaroo', {fact: content.fact, buffer:img.toString('base64')})
+})
+
+app.get('/Elephant', async (req, res) => {
+  
+   let fact = require('./Elephant_facts.json')
+ let content = {fact: fact[Math.floor(Math.random() * fact.length)]} 
+    let details = require('./Elephant_details.json')
+ 
+    fs.readFile('./assets/Elephant.png', (err, data) => {
+        res.render('Elephant', {fact: content.fact, buffer: data.toString('base64')})
+    })
+})
+
+app.get('/Cow', async (req, res) => {
+    let fact = require('./cow_facts.json')
+    let content = {fact: fact[Math.floor(Math.random() * fact.length)]} 
+    fs.readFile('./assets/Cow.jpg', (err, data) => {
+        res.render('Cow', {fact: content.fact, buffer: data.toString('base64')})
+    })
+})
+
 app.get('/wallpaper.png', async (req, res) => {
     res.sendFile(__dirname+'/walpaper.png')
 })
@@ -105,4 +154,5 @@ app.get('/wallpaper.png', async (req, res) => {
 app.get('/assets/:file', async (req, res) => {
     res.sendFile(__dirname+`/assets/${req.params.file}`)
 })
+
 

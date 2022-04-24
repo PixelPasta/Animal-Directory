@@ -10,9 +10,10 @@ Current Animals Available -
 <li> Foxes
 <li> Koalas
 <li> Raccoons
-<hr>
-Planned Animals - 
 <li> Whales
-<li> Kangaroos</h3>
+<li> Kangaroos
+<li> Elephants
+<li> Cows
+</h3>
 <hr>
 <center> <h2> I'm going to host as soon as it's finished </h2>
