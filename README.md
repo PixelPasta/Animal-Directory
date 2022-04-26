@@ -16,4 +16,4 @@ Current Animals Available -
 <li> Cows
 </h3>
 <hr>
-<center> <h2> I'm going to host as soon as it's finished </h2>
+<center> <h2> Visit here: https://facts.pixelpasta.xyz/ </h2>
