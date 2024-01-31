@@ -3,6 +3,7 @@ const fetch = require('node-fetch')
 const app = express()
 const port = process.env.PORT || 5600
 const fs = require('fs')
+const {promises: fsPromises} = require('fs');
 
 app.set('view engine', 'ejs')
 app.listen(port, () => {
@@ -41,16 +42,30 @@ app.get('/Dog', async (req, res) => {
 })
 
 app.get('/Fish', async (req, res) => {
-   
-    console.time("timer1");
-    let content = await fetch(`https://www.fishwatch.gov/api/species`)
-    content = await content.json()
-    console.timeEnd("timer1");
+    async function asyncReadFile(filename) {
+        try {
+          const contents = await fsPromises.readFile(filename, 'utf-8');
+      
+          const arr = contents.split(/\r?\n/);
+      
+      
+      
+          return arr;
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      
+  let arr = await asyncReadFile('./fish.txt')
 
-    let chosen = Math.floor(Math.random() * content.length)
+    let chosen = Math.floor(Math.random() * arr.length)
    
+
+let content = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${arr[chosen]}`)
+
+content = await content.json()
    
-    content = {fact: content[chosen]['Physical Description'], image: content[chosen]['Image Gallery'][0].src}
+    content = {fact: content.extract, image: content.thumbnail.source}
 
     console.time("timer2");
    let img = await fetch(content.image)
@@ -61,7 +76,7 @@ app.get('/Fish', async (req, res) => {
 })
 
 app.get('/Bird', async (req, res) => {
-    let content = await fetch(`https://some-random-api.ml/animal/birb`)
+    let content = await fetch(`https://some-random-api.com/animal/bird`)
     content = await content.json()
     let img = await fetch(content.image)
     img = await img.buffer()
@@ -69,7 +84,7 @@ app.get('/Bird', async (req, res) => {
 })
 
 app.get('/Panda', async (req, res) => {
-    let content = await fetch(`https://some-random-api.ml/animal/panda`)
+    let content = await fetch(`https://some-random-api.com/animal/panda`)
     content = await content.json()
     let img = await fetch(content.image)
     img = await img.buffer()
@@ -77,7 +92,7 @@ app.get('/Panda', async (req, res) => {
 })
 
 app.get('/Fox', async (req, res) => {
-    let content = await fetch(`https://some-random-api.ml/animal/fox`)
+    let content = await fetch(`https://some-random-api.com/animal/fox`)
     content = await content.json()
     let img = await fetch(content.image)
     img = await img.buffer()
@@ -85,7 +100,7 @@ app.get('/Fox', async (req, res) => {
 })
 
 app.get('/Koala', async (req, res) => {
-    let content = await fetch(`https://some-random-api.ml/animal/koala`)
+    let content = await fetch(`https://some-random-api.com/animal/koala`)
     content = await content.json()
     let img = await fetch(content.image)
     img = await img.buffer()
@@ -93,39 +108,32 @@ app.get('/Koala', async (req, res) => {
 })
 
 app.get('/Racoon', async (req, res) => {
-    let content = await fetch(`https://some-random-api.ml/animal/racoon`)
+    let content = await fetch(`https://some-random-api.com/animal/raccoon`)
     content = await content.json()
-    let img = await fetch(content.image)
-    img = await img.buffer()
-    res.render('Racoon', {fact: content.fact, buffer:img.toString('base64')})
+    const img = fs.readFileSync('./assets/racoon.png');
+    
+    res.render('Racoon', {fact: content.fact, buffer:Buffer.from(img).toString('base64')})
 })
 
 app.get('/Whale', async (req, res) => {
     
-    let content = await fetch(`https://some-random-api.ml/facts/whale`)
-    content = await content.json()
-    
+    let content = require('./whale_facts.json')
+    content = content[Math.floor(Math.random() * content.length)]
     console.time('uwu')
-    let img = await fetch(`https://some-random-api.ml/img/whale`)
-    img = await img.json()
-    img = await fetch(img.link)
-    img = await img.buffer()
+    const img = fs.readFileSync('./assets/whale.png');
     console.timeEnd('uwu')
-    res.render('Whale', {fact: content.fact, buffer:img.toString('base64')})
+    res.render('Whale', {fact: content.fact, buffer:Buffer.from(img).toString('base64')})
 })
 
 app.get('/Kangaroo', async (req, res) => {
     
-    let content = await fetch(`https://some-random-api.ml/facts/kangaroo`)
+    let content = await fetch(`https://some-random-api.com/animal/kangaroo`)
     content = await content.json()
     
     console.time('uwu')
-    let img = await fetch(`https://some-random-api.ml/img/kangaroo`)
-    img = await img.json()
-    img = await fetch(img.link)
-    img = await img.buffer()
+    const img = fs.readFileSync('./assets/kangaroo.png');
     console.timeEnd('uwu')
-    res.render('Kangaroo', {fact: content.fact, buffer:img.toString('base64')})
+    res.render('Kangaroo', {fact: content.fact, buffer:Buffer.from(img).toString('base64')})
 })
 
 app.get('/Elephant', async (req, res) => {
